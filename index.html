@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<head>
+  <title>Kalkulatorku</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #7d7d7d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #3fb741;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      width: 360px;
+      text-align: center;
+    }
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ffffff;
+      border-radius: 8px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .buttons button, .result-btn {
+      flex: 1 1 calc(50% - 10px);
+      padding: 12px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: #6561d1;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .buttons button:hover, .result-btn:hover {
+      background-color: #a82a2a;
+    }
+
+    .result-btn {
+      background-color: #007bff;
+      color: rgb(255, 255, 255);
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    #hasil {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #454846;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h3>Kalkulator Dua Angka</h3>
+
+    <input type="number" id="bilangan1" placeholder="Masukkan bilangan 1">
+    <input type="number" id="bilangan2" placeholder="Masukkan bilangan 2">
+
+    <div class="buttons">
+      <button onclick="setOperasi('+')">+</button>
+      <button onclick="setOperasi('-')">−</button>
+      <button onclick="setOperasi('*')">×</button>
+      <button onclick="setOperasi('/')">÷</button>
+    </div>
+
+    <button class="result-btn" onclick="hitung()">= Hasil</button>
+
+    <p id="hasil"></p>
+  </div>
+
+  <script>
+    var operasi = "";
+
+    var setOperasi = function(op) {
+      operasi = op;
+      document.getElementById("hasil").innerHTML = "Operasi dipilih: " + op;
+      document.getElementById("hasil").style.color = "#333";
+    };
+
+    var hitung = function() {
+      var bil1 = parseFloat(document.getElementById("bilangan1").value);
+      var bil2 = parseFloat(document.getElementById("bilangan2").value);
+      var hasilElemen = document.getElementById("hasil");
+
+      if (isNaN(bil1) || isNaN(bil2)) {
+        hasilElemen.innerHTML = "Masukkan dua bilangan yang valid!";
+        hasilElemen.style.color = "#000000";
+        return;
+      }
+
+      if (operasi === "") {
+        hasilElemen.innerHTML = "Silakan pilih operasi terlebih dahulu.";
+        hasilElemen.style.color = "#000000";
+        return;
+      }
+
+      var hasil;
+      switch (operasi) {
+        case '+':
+          hasil = bil1 + bil2;
+          break;
+        case '-':
+          hasil = bil1 - bil2;
+          break;
+        case '*':
+          hasil = bil1 * bil2;
+          break;
+        case '/':
+          if (bil2 === 0) {
+            hasilElemen.innerHTML = "Tidak bisa dibagi dengan nol!";
+            hasilElemen.style.color = "#dc3545";
+            return;
+          }
+          hasil = bil1 / bil2;
+          break;
+        default:
+          hasilElemen.innerHTML = "Operasi tidak dikenal.";
+          hasilElemen.style.color = "#dc3545";
+          return;
+      }
+
+      hasilElemen.innerHTML = `Hasil: ${bil1} ${operasi} ${bil2} = ${hasil}`;
+      hasilElemen.style.color = "#00000";
+    };
+  </script>
+
+</body>
+</html>
